@@ -16,13 +16,26 @@
 # limitations under the License.
 # ==============================================================================
 import web
+import sys
 
 # 配置接口URL
 urls = (
     '/test','test',
 )
+app = web.application(urls, globals())
 
 class test:
     '''w2v'''
     def GET(self):
         return "test!"
+
+if __name__ == "__main__":
+    #pdb.set_trace()
+    reload(sys)
+    sys.setdefaultencoding('utf8')
+
+    #smysql = SMysql()
+    #smysql.connect()
+
+    web.internalerror = web.debugerror
+    app.run()
