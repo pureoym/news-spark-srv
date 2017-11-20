@@ -17,6 +17,7 @@
 # ==============================================================================
 import web
 import sys
+from pyspark.sql import SparkSession
 
 # 配置接口URL
 urls = (
@@ -24,10 +25,14 @@ urls = (
 )
 app = web.application(urls, globals())
 
+TEST_INPUT = 'hdfs://10.10.160.150:9000/test/test.txt'
+
 class test:
     '''w2v'''
     def GET(self):
-        return "test!"
+        spark = SparkSession.builder().appName("test").master("yarn").getOrCreate()
+        test_rdd = spark.read.text(TEST_INPUT).cache()
+        return "test!" + str(len(test_rdd))
 
 if __name__ == "__main__":
     #pdb.set_trace()
