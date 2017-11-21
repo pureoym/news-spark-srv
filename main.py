@@ -44,7 +44,8 @@ TEST_INPUT = 'hdfs://10.10.160.150:9000/test/test.txt'
 
 class test:
     def GET(self):
-        sc = SparkContext(appName="test")
+        conf = SparkConf().setMaster("yarn").setAppName("CountingSheep").set("spark.executor.memory", "1g")
+        sc = SparkContext(conf)
         test_rdd = sc.textFile(TEST_INPUT)
         count = test_rdd.count()
         sc.stop()
