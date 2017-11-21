@@ -50,11 +50,9 @@ class test:
                 .set("spark.executor.memory", "1g"))
         sc = SparkContext(conf=conf)
         test_rdd = sc.textFile(TEST_INPUT)
-        print test_rdd
-        count = test_rdd.count()
-        print count
+        test_result = 'test: ' + str(test_rdd.take(1))
         sc.stop()
-        return "test!" + str(count)
+        return test_result
 
 
 if __name__ == "__main__":
