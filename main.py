@@ -39,6 +39,7 @@ urls = (
 )
 app = web.application(urls, globals())
 
+
 TEST_INPUT = 'hdfs://10.10.160.150:9000/test/test.txt'
 
 
