@@ -15,18 +15,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-import web
-
 # 动态加载pyspark
 import os
 import sys
+
+import web
+
 os.environ['SPARK_HOME'] = "/application/search/spark-2.1.0-hadoop2.7"
 sys.path.append("/application/search/spark-2.1.0-hadoop2.7/python")
 sys.path.append("/application/search/spark-2.1.0-hadoop2.7/python/lib/py4j-0.10.4-src.zip")
 try:
-    from pyspark import SparkSession
     from pyspark import SparkContext
     from pyspark import SparkConf
+
     print ("success")
 except ImportError as e:
     print ("error importing spark modules", e)
@@ -34,26 +35,29 @@ except ImportError as e:
 
 # 配置接口URL
 urls = (
-    '/test','test',
+    '/test', 'test',
 )
 app = web.application(urls, globals())
 
 TEST_INPUT = 'hdfs://10.10.160.150:9000/test/test.txt'
 
+
 class test:
-    '''w2v'''
+
     def GET(self):
-        spark = SparkSession.builder().appName("test").master("yarn").getOrCreate()
-        test_rdd = spark.read.text(TEST_INPUT).cache()
+        sc = SparkContext(appName="test")
+        test_rdd = sc.textFile(TEST_INPUT)
+        sc.stop()
         return "test!" + str(len(test_rdd))
 
+
 if __name__ == "__main__":
-    #pdb.set_trace()
+    # pdb.set_trace()
     reload(sys)
     sys.setdefaultencoding('utf8')
 
-    #smysql = SMysql()
-    #smysql.connect()
+    # smysql = SMysql()
+    # smysql.connect()
 
     web.internalerror = web.debugerror
     app.run()
