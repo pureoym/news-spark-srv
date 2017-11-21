@@ -23,7 +23,7 @@ import web
 
 os.environ['SPARK_HOME'] = "/application/search/spark-2.1.0-hadoop2.7"
 sys.path.append("/application/search/spark-2.1.0-hadoop2.7/python")
-sys.path.append("/application/search/spark-2.1.0-hadoop2.7/python/lib/py4j-0.10.4-src.zip:/usr/local/python")
+sys.path.append("/application/search/spark-2.1.0-hadoop2.7/python/lib/py4j-0.10.4-src.zip")
 try:
     from pyspark import SparkContext
     from pyspark import SparkConf
