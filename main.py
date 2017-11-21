@@ -46,7 +46,7 @@ class test:
         sc = None
         try:
             conf = (SparkConf()
-                    .setMaster("spark://10.10.160.150:7077")
+                    .setMaster("spark://10.10.160.151:7077")
                     .setAppName("news test")
                     .set("spark.executor.memory", "1g"))
             sc = SparkContext(conf=conf)
