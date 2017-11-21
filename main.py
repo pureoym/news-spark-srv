@@ -27,8 +27,7 @@ sys.path.append("/application/search/spark-2.1.0-hadoop2.7/python/lib/py4j-0.10.
 try:
     from pyspark import SparkContext
     from pyspark import SparkConf
-
-    print ("success")
+    print ("import spark success")
 except ImportError as e:
     print ("error importing spark modules", e)
     sys.exit(1)
@@ -44,14 +43,17 @@ TEST_INPUT = 'hdfs://10.10.160.150:9000/test/test.txt'
 
 class test:
     def GET(self):
-        conf = (SparkConf()
-                .setMaster("spark://10.10.160.150:7077")
-                .setAppName("news test")
-                .set("spark.executor.memory", "1g"))
-        sc = SparkContext(conf=conf)
-        test_rdd = sc.textFile(TEST_INPUT)
-        test_result = 'test: ' + str(test_rdd.take(1))
-        sc.stop()
+        sc = None
+        try:
+            conf = (SparkConf()
+                    .setMaster("spark://10.10.160.150:7077")
+                    .setAppName("news test")
+                    .set("spark.executor.memory", "1g"))
+            sc = SparkContext(conf=conf)
+            test_rdd = sc.textFile(TEST_INPUT)
+            test_result = 'test: ' + str(test_rdd.take(1))
+        finally:
+            sc.stop()
         return test_result
 
 
