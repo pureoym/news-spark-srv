@@ -48,7 +48,7 @@ class test:
         sc = SparkContext(appName="test")
         test_rdd = sc.textFile(TEST_INPUT)
         sc.stop()
-        return "test!" + str(len(test_rdd))
+        return "test!" + str(len(test_rdd.count()))
 
 
 if __name__ == "__main__":
