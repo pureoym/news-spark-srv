@@ -43,12 +43,12 @@ TEST_INPUT = 'hdfs://10.10.160.150:9000/test/test.txt'
 
 
 class test:
-
     def GET(self):
         sc = SparkContext(appName="test")
         test_rdd = sc.textFile(TEST_INPUT)
+        count = test_rdd.count()
         sc.stop()
-        return "test!" + str(len(test_rdd.count()))
+        return "test!" + str(count)
 
 
 if __name__ == "__main__":
