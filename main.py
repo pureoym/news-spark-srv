@@ -16,8 +16,21 @@
 # limitations under the License.
 # ==============================================================================
 import web
+
+# 动态加载pyspark
+import os
 import sys
-from pyspark.sql import SparkSession
+os.environ['SPARK_HOME'] = "/application/search/spark-2.1.0-hadoop2.7"
+sys.path.append("/application/search/spark-2.1.0-hadoop2.7/python")
+sys.path.append("/application/search/spark-2.1.0-hadoop2.7/python/lib/py4j-0.10.4-src.zip")
+try:
+    from pyspark import SparkSession
+    from pyspark import SparkContext
+    from pyspark import SparkConf
+    print ("success")
+except ImportError as e:
+    print ("error importing spark modules", e)
+    sys.exit(1)
 
 # 配置接口URL
 urls = (
